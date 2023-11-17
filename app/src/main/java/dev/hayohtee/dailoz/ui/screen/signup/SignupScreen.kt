@@ -1,10 +1,12 @@
-package dev.hayohtee.dailoz.ui.screen.login
+package dev.hayohtee.dailoz.ui.screen.signup
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,37 +33,40 @@ import dev.hayohtee.dailoz.ui.screen.common.RegistrationOptions
 import dev.hayohtee.dailoz.ui.theme.DailozTheme
 
 @Composable
-fun LoginScreen(
+fun SignupScreen(
+    username: String,
+    onUsernameChange: (String) -> Unit,
     email: String,
     onEmailChange: (String) -> Unit,
     password: String,
     onPasswordChange: (String) -> Unit,
-    onForgotPasswordClick: () -> Unit,
-    onLoginClick: () -> Unit,
+    onCreateClick: () -> Unit,
     onGoogleClick: () -> Unit,
-    onSignupClick: () -> Unit,
-    modifier: Modifier = Modifier) {
+    onSignInClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
-        verticalArrangement = Arrangement.SpaceEvenly,
         modifier = modifier
             .fillMaxSize()
-            .padding(dimensionResource(id = R.dimen.medium_padding))
+            .padding(dimensionResource(id = R.dimen.medium_padding)),
+        verticalArrangement = Arrangement.SpaceEvenly
     ) {
         Text(
-            text = stringResource(id = R.string.login),
+            text = stringResource(id = R.string.signup),
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             )
         )
 
-        LoginFields(
+        SignupFields(
+            username = username,
+            onUsernameChange = onUsernameChange,
             email = email,
             onEmailChange = onEmailChange,
             password = password,
             onPasswordChange = onPasswordChange,
-            onForgotPasswordClick = onForgotPasswordClick,
-            onLoginClick = onLoginClick
+            onCreateClick = onCreateClick
         )
 
         RegistrationOptions(onGoogleClick = onGoogleClick)
@@ -72,32 +77,52 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = stringResource(id = R.string.dont_have_account),
+                text = stringResource(id = R.string.have_any_account),
                 style = MaterialTheme.typography.bodyMedium.copy(
                     color = MaterialTheme.colorScheme.onBackground
                 )
             )
-            TextButton(onClick = onSignupClick) {
-                Text(text = stringResource(id = R.string.signup))
+            TextButton(onClick = onSignInClick) {
+                Text(text = stringResource(id = R.string.signin))
             }
         }
+
     }
 }
 
 @Composable
-fun LoginFields(
+fun SignupFields(
+    username: String,
+    onUsernameChange: (String) -> Unit,
     email: String,
     onEmailChange: (String) -> Unit,
     password: String,
     onPasswordChange: (String) -> Unit,
-    onForgotPasswordClick: () -> Unit,
-    onLoginClick: () -> Unit,
+    onCreateClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.medium_padding))
     ) {
+        OutlinedTextField(
+            value = username,
+            onValueChange = onUsernameChange,
+            placeholder = {
+                Text(text = stringResource(id = R.string.username))
+            },
+            keyboardOptions = KeyboardOptions.Default.copy(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Text
+            ),
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.avatar),
+                    contentDescription = null
+                )
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
         OutlinedTextField(
             value = email,
             onValueChange = onEmailChange,
@@ -140,40 +165,35 @@ fun LoginFields(
             },
             modifier = Modifier.fillMaxWidth()
         )
-        TextButton(
-            onClick = onForgotPasswordClick,
-            modifier = Modifier.align(Alignment.End)
-        ) {
-            Text(
-                text = stringResource(id = R.string.forgot_password),
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
+
+        Spacer(modifier = Modifier.height(32.dp))
+
         Button(
-            onClick = onLoginClick,
+            onClick = onCreateClick,
             shape = RoundedCornerShape(14.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 52.dp)
         ) {
-            Text(text = stringResource(id = R.string.login))
+            Text(text = stringResource(id = R.string.create))
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun LoginScreenPreview() {
+private fun SignupScreenPreview() {
     DailozTheme {
-        LoginScreen(
+        SignupScreen(
+            username = "",
+            onUsernameChange = {},
             email = "",
             onEmailChange = {},
             password = "",
             onPasswordChange = {},
-            onForgotPasswordClick = {},
-            onLoginClick = {},
+            onCreateClick = {},
             onGoogleClick = {},
-            onSignupClick = {}
+            onSignInClick = {}
         )
     }
 }
