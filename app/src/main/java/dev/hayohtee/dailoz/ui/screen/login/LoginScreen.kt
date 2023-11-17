@@ -39,6 +39,7 @@ fun LoginScreen(
     onForgotPasswordClick: () -> Unit,
     onLoginClick: () -> Unit,
     onGoogleClick: () -> Unit,
+    onSignupClick: () -> Unit,
     modifier: Modifier = Modifier) {
     Column(
         verticalArrangement = Arrangement.SpaceEvenly,
@@ -76,7 +77,7 @@ fun LoginScreen(
                     color = MaterialTheme.colorScheme.onBackground
                 )
             )
-            TextButton(onClick = { /*TODO*/ }) {
+            TextButton(onClick = onSignupClick) {
                 Text(text = stringResource(id = R.string.signup))
             }
         }
@@ -171,7 +172,8 @@ private fun LoginScreenPreview() {
             onPasswordChange = {},
             onForgotPasswordClick = {},
             onLoginClick = {},
-            onGoogleClick = {}
+            onGoogleClick = {},
+            onSignupClick = {}
         )
     }
 }
