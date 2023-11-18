@@ -10,25 +10,22 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.hayohtee.dailoz.R
+import dev.hayohtee.dailoz.ui.screen.common.DailozEmailTextField
+import dev.hayohtee.dailoz.ui.screen.common.DailozPasswordTextField
+import dev.hayohtee.dailoz.ui.screen.common.DailozUsernameTextField
 import dev.hayohtee.dailoz.ui.screen.common.RegistrationOptions
 import dev.hayohtee.dailoz.ui.theme.DailozTheme
 
@@ -105,64 +102,20 @@ fun SignupFields(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.medium_padding))
     ) {
-        OutlinedTextField(
-            value = username,
-            onValueChange = onUsernameChange,
-            placeholder = {
-                Text(text = stringResource(id = R.string.username))
-            },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Next,
-                keyboardType = KeyboardType.Text
-            ),
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.avatar),
-                    contentDescription = null
-                )
-            },
+        DailozUsernameTextField(
+            username = username,
+            onUsernameChange = onUsernameChange,
             modifier = Modifier.fillMaxWidth()
         )
-        OutlinedTextField(
-            value = email,
-            onValueChange = onEmailChange,
-            placeholder = {
-                Text(text = stringResource(id = R.string.email_id))
-            },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Next,
-                keyboardType = KeyboardType.Email
-            ),
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.message),
-                    contentDescription = null
-                )
-            },
+        DailozEmailTextField(
+            email = email,
+            onEmailChange = onEmailChange,
             modifier = Modifier.fillMaxWidth()
         )
-        OutlinedTextField(
-            value = password,
-            onValueChange = onPasswordChange,
-            placeholder = {
-                Text(text = stringResource(id = R.string.password))
-            },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Done,
-                keyboardType = KeyboardType.Password
-            ),
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.lock),
-                    contentDescription = null
-                )
-            },
-            trailingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.hide),
-                    contentDescription = null
-                )
-            },
+
+        DailozPasswordTextField(
+            password = password,
+            onPasswordChange = onPasswordChange,
             modifier = Modifier.fillMaxWidth()
         )
 
