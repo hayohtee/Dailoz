@@ -3,11 +3,13 @@ package dev.hayohtee.dailoz.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dev.hayohtee.dailoz.domain.repository.DestinationRepository
 import dev.hayohtee.dailoz.ui.screen.login.LoginDestination
 import dev.hayohtee.dailoz.ui.screen.login.LoginScreen
 import dev.hayohtee.dailoz.ui.screen.login.LoginViewModel
@@ -16,17 +18,28 @@ import dev.hayohtee.dailoz.ui.screen.onboarding.OnBoardingScreen
 import dev.hayohtee.dailoz.ui.screen.signup.SignupDestination
 import dev.hayohtee.dailoz.ui.screen.signup.SignupScreen
 import dev.hayohtee.dailoz.ui.screen.signup.SignupViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun DailozApp(
     startDestination: String,
+    destinationRepository: DestinationRepository,
     navController: NavHostController = rememberNavController()
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
         composable(route = OnBoardingDestination.route) {
+            val coroutineScope = rememberCoroutineScope()
             OnBoardingScreen(
-                onLoginClick = { navController.navigate(route = LoginDestination.route) },
-                onSignUpClick = { navController.navigate(route = SignupDestination.route) }
+                onLoginClick = {
+                    coroutineScope.launch {
+                        destinationRepository.saveStartDestination(LoginDestination.route)
+                    }
+                },
+                onSignUpClick = {
+                    coroutineScope.launch {
+                        destinationRepository.saveStartDestination(SignupDestination.route)
+                    }
+                }
             )
         }
 
