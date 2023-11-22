@@ -1,6 +1,6 @@
 package dev.hayohtee.dailoz.di
 
-import android.content.Context
+import android.app.Application
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,8 +16,8 @@ import javax.inject.Singleton
 class AppModule {
     @Provides
     @Singleton
-    fun provideDestinationPreferences(context: Context): DestinationPreferences {
-        return DestinationPreferencesImpl(context)
+    fun provideDestinationPreferences(application: Application): DestinationPreferences {
+        return DestinationPreferencesImpl(application)
     }
 
     @Provides
