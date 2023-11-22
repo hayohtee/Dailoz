@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -54,7 +55,9 @@ fun DailozApp(
                 onForgotPasswordClick = { /*TODO*/ },
                 onLoginClick = { /*TODO*/ },
                 onGoogleClick = { /*TODO*/ },
-                onSignupClick = { navController.navigate(route = SignupDestination.route) }
+                onSignupClick = {
+                    navController.navigateSingleTopTo(route = SignupDestination.route)
+                }
             )
         }
 
@@ -69,9 +72,21 @@ fun DailozApp(
                 onPasswordChange = viewModel::updatePassword,
                 onCreateClick = { /*TODO*/ },
                 onGoogleClick = { /*TODO*/ },
-                onSignInClick = { navController.navigate(route = LoginDestination.route) }
+                onSignInClick = {
+                    navController.navigateSingleTopTo(route = LoginDestination.route)
+                }
             )
         }
     }
 
+}
+
+fun NavHostController.navigateSingleTopTo(route: String) {
+    this.navigate(route = route) {
+        popUpTo(this@navigateSingleTopTo.graph.findStartDestination().id) {
+            saveState = true
+        }
+        launchSingleTop = true
+        restoreState = true
+    }
 }
