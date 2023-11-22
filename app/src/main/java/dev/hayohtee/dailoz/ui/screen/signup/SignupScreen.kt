@@ -31,11 +31,9 @@ import dev.hayohtee.dailoz.ui.theme.DailozTheme
 
 @Composable
 fun SignupScreen(
-    username: String,
+    uiState: SignupUiState,
     onUsernameChange: (String) -> Unit,
-    email: String,
     onEmailChange: (String) -> Unit,
-    password: String,
     onPasswordChange: (String) -> Unit,
     onCreateClick: () -> Unit,
     onGoogleClick: () -> Unit,
@@ -57,11 +55,11 @@ fun SignupScreen(
         )
 
         SignupFields(
-            username = username,
+            username = uiState.username,
             onUsernameChange = onUsernameChange,
-            email = email,
+            email = uiState.email,
             onEmailChange = onEmailChange,
-            password = password,
+            password = uiState.password,
             onPasswordChange = onPasswordChange,
             onCreateClick = onCreateClick
         )
@@ -138,11 +136,9 @@ fun SignupFields(
 private fun SignupScreenPreview() {
     DailozTheme {
         SignupScreen(
-            username = "",
+            uiState = SignupUiState(),
             onUsernameChange = {},
-            email = "",
             onEmailChange = {},
-            password = "",
             onPasswordChange = {},
             onCreateClick = {},
             onGoogleClick = {},
