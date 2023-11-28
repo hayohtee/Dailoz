@@ -1,6 +1,8 @@
 package dev.hayohtee.dailoz.di
 
 import android.app.Application
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,6 +16,18 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFireStore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
+    }
+
     @Provides
     @Singleton
     fun provideDestinationPreferences(application: Application): DestinationPreferences {
