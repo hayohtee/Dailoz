@@ -34,18 +34,23 @@ fun DailozNavigationItem(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         IconButton(onClick = onClick) {
-            Crossfade(targetState = selected, label = "Icon animation") { isSelected ->
+            Crossfade(
+                targetState = selected,
+                label = "Icon animation"
+            ) { isSelected ->
                 if (isSelected) {
                     Icon(
                         painter = selectedIcon,
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(24.dp)
                     )
                 } else {
                     Icon(
                         painter = unselectedIcon,
                         contentDescription = null,
-                        tint = Color(0xFFC6CEDD)
+                        tint = Color(0xFFC6CEDD),
+                        modifier = Modifier.size(24.dp)
                     )
                 }
             }
