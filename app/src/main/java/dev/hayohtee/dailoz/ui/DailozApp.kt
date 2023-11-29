@@ -10,10 +10,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import dev.hayohtee.dailoz.domain.repository.DestinationRepository
+import dev.hayohtee.dailoz.ui.screen.addtask.AddTaskDestination
+import dev.hayohtee.dailoz.ui.screen.addtask.AddTaskScreen
+import dev.hayohtee.dailoz.ui.screen.home.HomeDestination
 import dev.hayohtee.dailoz.ui.screen.login.LoginDestination
 import dev.hayohtee.dailoz.ui.screen.login.LoginScreen
 import dev.hayohtee.dailoz.ui.screen.login.LoginViewModel
+import dev.hayohtee.dailoz.ui.screen.main.MainScreen
+import dev.hayohtee.dailoz.ui.screen.main.MainScreenDestination
 import dev.hayohtee.dailoz.ui.screen.onboarding.OnBoardingDestination
 import dev.hayohtee.dailoz.ui.screen.onboarding.OnBoardingScreen
 import dev.hayohtee.dailoz.ui.screen.signup.SignupDestination
@@ -59,6 +65,20 @@ fun DailozApp(
                     navController.navigateSingleTopTo(route = SignupDestination.route)
                 }
             )
+        }
+
+        navigation(route = MainScreenDestination.route, startDestination = HomeDestination.route) {
+            composable(route = HomeDestination.route) {
+                MainScreen(
+                    onAddTaskClick = {
+                        navController.navigate(route = AddTaskDestination.route)
+                    }
+                )
+            }
+        }
+
+        composable(route = AddTaskDestination.route) {
+            AddTaskScreen()
         }
 
         composable(route = SignupDestination.route) {
