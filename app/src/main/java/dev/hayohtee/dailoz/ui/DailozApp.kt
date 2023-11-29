@@ -5,14 +5,21 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import dev.hayohtee.dailoz.domain.repository.DestinationRepository
+import dev.hayohtee.dailoz.ui.screen.addtask.AddTaskDestination
+import dev.hayohtee.dailoz.ui.screen.addtask.AddTaskScreen
+import dev.hayohtee.dailoz.ui.screen.home.HomeDestination
 import dev.hayohtee.dailoz.ui.screen.login.LoginDestination
 import dev.hayohtee.dailoz.ui.screen.login.LoginScreen
 import dev.hayohtee.dailoz.ui.screen.login.LoginViewModel
+import dev.hayohtee.dailoz.ui.screen.main.MainScreen
+import dev.hayohtee.dailoz.ui.screen.main.MainScreenDestination
 import dev.hayohtee.dailoz.ui.screen.onboarding.OnBoardingDestination
 import dev.hayohtee.dailoz.ui.screen.onboarding.OnBoardingScreen
 import dev.hayohtee.dailoz.ui.screen.signup.SignupDestination
@@ -54,8 +61,24 @@ fun DailozApp(
                 onForgotPasswordClick = { /*TODO*/ },
                 onLoginClick = { /*TODO*/ },
                 onGoogleClick = { /*TODO*/ },
-                onSignupClick = { navController.navigate(route = SignupDestination.route) }
+                onSignupClick = {
+                    navController.navigateSingleTopTo(route = SignupDestination.route)
+                }
             )
+        }
+
+        navigation(route = MainScreenDestination.route, startDestination = HomeDestination.route) {
+            composable(route = HomeDestination.route) {
+                MainScreen(
+                    onAddTaskClick = {
+                        navController.navigate(route = AddTaskDestination.route)
+                    }
+                )
+            }
+        }
+
+        composable(route = AddTaskDestination.route) {
+            AddTaskScreen()
         }
 
         composable(route = SignupDestination.route) {
@@ -69,9 +92,21 @@ fun DailozApp(
                 onPasswordChange = viewModel::updatePassword,
                 onCreateClick = { /*TODO*/ },
                 onGoogleClick = { /*TODO*/ },
-                onSignInClick = { navController.navigate(route = LoginDestination.route) }
+                onSignInClick = {
+                    navController.navigateSingleTopTo(route = LoginDestination.route)
+                }
             )
         }
     }
 
+}
+
+fun NavHostController.navigateSingleTopTo(route: String) {
+    this.navigate(route = route) {
+        popUpTo(this@navigateSingleTopTo.graph.findStartDestination().id) {
+            saveState = true
+        }
+        launchSingleTop = true
+        restoreState = true
+    }
 }

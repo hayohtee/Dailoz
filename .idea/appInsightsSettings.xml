@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="dev.hayohtee.dailoz" />
+                  <option name="mobileSdkAppId" value="1:268183770948:android:50bdf4a1bd1027fa35a911" />
+                  <option name="projectId" value="dailoz-cec16" />
+                  <option name="projectNumber" value="268183770948" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
