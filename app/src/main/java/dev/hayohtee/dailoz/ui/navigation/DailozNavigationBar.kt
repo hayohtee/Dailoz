@@ -29,19 +29,22 @@ import dev.hayohtee.dailoz.ui.theme.DailozTheme
 
 @Composable
 fun DailozNavigationBar(
-    currentDestination: DailozDestination,
-    onItemClick: (DailozDestination) -> Unit,
+    currentDestination: String,
+    onItemClick: (String) -> Unit,
     onAddTaskClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
             .shadow(
-                elevation = 20.dp,
-                spotColor = Color(0x54C6C6C6),
-                ambientColor = Color(0x54C6C6C6)
+                elevation = 13.dp,
+                spotColor = Color(0xFFF1F7FF),
+                ambientColor = Color(0xFFF1F7FF)
             )
-            .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(20.dp))
+            .background(
+                color = MaterialTheme.colorScheme.background,
+                shape = RoundedCornerShape(14.dp)
+            )
             .padding(16.dp)
             .fillMaxWidth()
             .height(50.dp),
@@ -49,14 +52,14 @@ fun DailozNavigationBar(
         horizontalArrangement = Arrangement.SpaceAround
     ) {
         DailozNavigationItem(
-            selected = currentDestination == HomeDestination,
-            onClick = { onItemClick(HomeDestination)},
+            selected = currentDestination == HomeDestination.route,
+            onClick = { onItemClick(HomeDestination.route) },
             selectedIcon = painterResource(id = R.drawable.home_selected),
             unselectedIcon = painterResource(id = R.drawable.home)
         )
         DailozNavigationItem(
-            selected = currentDestination == TaskDestination,
-            onClick = { onItemClick(TaskDestination) },
+            selected = currentDestination == TaskDestination.route,
+            onClick = { onItemClick(TaskDestination.route) },
             selectedIcon = painterResource(id = R.drawable.document_selected),
             unselectedIcon = painterResource(id = R.drawable.document)
         )
@@ -74,14 +77,14 @@ fun DailozNavigationBar(
             )
         }
         DailozNavigationItem(
-            selected = currentDestination == ActivityDestination,
-            onClick = { onItemClick(ActivityDestination) },
+            selected = currentDestination == ActivityDestination.route,
+            onClick = { onItemClick(ActivityDestination.route) },
             selectedIcon = painterResource(id = R.drawable.activity_selected),
             unselectedIcon = painterResource(id = R.drawable.activity)
         )
         DailozNavigationItem(
-            selected = currentDestination == ProfileDestination,
-            onClick = { onItemClick(ProfileDestination) },
+            selected = currentDestination == ProfileDestination.route,
+            onClick = { onItemClick(ProfileDestination.route) },
             selectedIcon = painterResource(id = R.drawable.folder_selected),
             unselectedIcon = painterResource(id = R.drawable.folder)
         )
@@ -93,7 +96,7 @@ fun DailozNavigationBar(
 fun DailozNavigationBarPreview() {
     DailozTheme {
         DailozNavigationBar(
-            currentDestination = HomeDestination,
+            currentDestination = HomeDestination.route,
             onItemClick = {},
             onAddTaskClick = {},
             modifier = Modifier.padding(16.dp)
